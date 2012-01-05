@@ -1,6 +1,6 @@
 { "name": "node-xmpp-serviceadmin"
-,"version": "0.1"
-,"main": "./lib/node-xmpp-serviceadmin"
+,"version": "0.1.0"
+,"main": "./lib/ServiceAdmin"
 ,"description": "Service Administration (XEP-0133) library for node-xmpp"
 ,"author": "Markus Kohlhase"
 ,"dependencies": {"node-xmpp": ">=0.3.1"
