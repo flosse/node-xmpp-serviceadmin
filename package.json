@@ -1,0 +1,22 @@
+{ "name": "node-xmpp-serviceadmin"
+,"version": "0.1"
+,"main": "./lib/node-xmpp-serviceadmin"
+,"description": "Service Administration (XEP-0133) library for node-xmpp"
+,"author": "Markus Kohlhase"
+,"dependencies": {"node-xmpp": ">=0.3.1"
+		 ,"ltx": ">= 0.1.2"
+		 }
+,"devDependencies": { "jasmine-node": ">=1.0.13" }
+,"repositories": [{"type": "git"
+		  ,"path": "git://github.com/flosse/node-xmpp-serviceadmin.git"
+		  }]
+,"homepage": "http://github.com/flosse/node-xmpp-serviceadmin"
+,"bugs": "http://github.com/flosse/node-xmpp-serviceadmin/issues"
+,"maintainers": [{"name": "Markus Kohlhase"
+		 ,"email": "mail@markus-kohlhase.de"
+		 ,"web": "http://github.com/flosse/"
+		 }]
+,"contributors": ["Markus Kohlhase"]
+,"licenses": [{"type": "MIT"}]
+,"engine": "node"
+}
