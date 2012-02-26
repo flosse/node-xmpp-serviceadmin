@@ -1,4 +1,4 @@
-sa    = require "node-xmpp-serviceadmin"
+sa    = require "../lib/ServiceAdmin"
 ltx   = require "ltx"
 
 describe "Service Admin", ->
