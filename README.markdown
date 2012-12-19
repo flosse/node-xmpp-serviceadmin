@@ -15,14 +15,14 @@ With package manager [npm](http://npmjs.org/):
 ## Usage
 
 ```coffeescript
-xmpp  = require "node-xmpp"
-sa    = require "node-xmpp-serviceadmin"
+xmpp          = require "node-xmpp"
+ServiceAdmin  = require "node-xmpp-serviceadmin"
 
 # define the host
 service = "example.org"
 
 # define the JID that has the admin privileges
-root    = "root@mycomponent.example.org"
+root = "root@mycomponent.example.org"
 
 # creat the xmpp connection
 comp = new xmpp.Component
@@ -31,16 +31,16 @@ comp = new xmpp.Component
   host      : "127.0.0.1"
   port      : "8888"
 
-serviceAdmin = new sa.ServieAdmin root, comp, service
+sa = new ServieAdmin root, comp, service
 
 # creating a new user
-serviceAdmin.addUser "jid@example.org", "secret", { name: "Der Weihnachtsmann" }, (err) ->
+sa.addUser "jid@example.org", "secret", { name: "Der Weihnachtsmann" }, (err) ->
 
 # changing a user password
-serviceAdmin.changeUserPassword "jid@example.org", "newSecret", (err) ->
+sa.changeUserPassword "jid@example.org", "newSecret", (err) ->
 
 # delete a user
-serviceAdmin.deleteUser "jid@example.org", (err) ->
+sa.deleteUser "jid@example.org", (err) ->
 ```
 
 ## Running tests

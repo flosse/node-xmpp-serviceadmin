@@ -1,6 +1,6 @@
 {
   "name":         "node-xmpp-serviceadmin",
-  "version":      "0.1.0",
+  "version":      "0.1.1",
   "main":         "./lib/ServiceAdmin",
   "description":  "Service Administration (XEP-0133) library for node-xmpp",
   "author":       "Markus Kohlhase",
@@ -12,13 +12,14 @@
   "engine":       "node",
   "dependencies":
   {
-    "node-xmpp":  ">=0.3.1",
-    "ltx":        ">= 0.1.2"
+    "node-xmpp":        ">=0.3.1",
+    "node-stringprep":  "*",
+    "ltx":              ">= 0.1.2"
   },
   "devDependencies":
   {
     "jasmine-node":   ">=1.0.21",
-    "coffee-script":  ">= 1.2.0"
+    "coffee-script":  ">= 1.4.0"
   },
   "repositories":
   [

@@ -1,5 +1,5 @@
-sa    = require "../lib/ServiceAdmin"
-ltx   = require "ltx"
+ServiceAdmin = require "../lib/ServiceAdmin"
+ltx          = require "ltx"
 
 describe "Service Admin", ->
 
@@ -21,7 +21,7 @@ describe "Service Admin", ->
 
     # define the JID that has the admin privileges
     root = "root@#{service}"
-    serviceAdmin = new sa.ServiceAdmin root, xmppComp, service
+    serviceAdmin = new ServiceAdmin root, xmppComp, service
     (expect typeof serviceAdmin).toEqual "object"
     (expect serviceAdmin.jid).toEqual root
     (expect serviceAdmin.service).toEqual service
