@@ -13,7 +13,7 @@
   "dependencies":
   {
     "node-xmpp":        ">=0.3.1",
-    "node-stringprep":  "*",
+    "node-stringprep":  ">=0.1.4",
     "ltx":              ">= 0.1.2"
   },
   "devDependencies":
