@@ -5,6 +5,8 @@ Jabber Service Administration
 [node-xmpp](https://github.com/astro/node-xmpp).
 
 [![Build Status](https://secure.travis-ci.org/flosse/node-xmpp-serviceadmin.png)](http://travis-ci.org/flosse/node-xmpp-serviceadmin)
+[![Dependency Status](https://gemnasium.com/flosse/node-xmpp-serviceadmin.png)](https://gemnasium.com/flosse/node-xmpp-serviceadmin.png)
+[![NPM version](https://badge.fury.io/js/node-xmpp-serviceadmin.png)](http://badge.fury.io/js/node-xmpp-serviceadmin)
 
 ## Installation
 
