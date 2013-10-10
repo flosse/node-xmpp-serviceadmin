@@ -16,39 +16,41 @@ With package manager [npm](http://npmjs.org/):
 
 ## Usage
 
-```coffeescript
-xmpp          = require "node-xmpp"
-ServiceAdmin  = require "node-xmpp-serviceadmin"
+```javascript
+var xmpp          = require("node-xmpp");
+var ServiceAdmin  = require("node-xmpp-serviceadmin");
 
-# define the host
-service = "example.org"
+// define the host
+var service = "example.org";
 
-# define the JID that has the admin privileges
-root = "root@mycomponent.example.org"
+// define the JID that has the admin privileges
+var root = "root@mycomponent.example.org";
 
-# creat the xmpp connection
-comp = new xmpp.Component
-  jid       : "mycomponent"
-  password  : "secret"
-  host      : "127.0.0.1"
+// creat the xmpp connection
+var comp = new xmpp.Component({
+  jid       : "mycomponent",
+  password  : "secret",
+  host      : "127.0.0.1",
   port      : "8888"
+});
 
-sa = new ServieAdmin root, comp, service
+var sa = new ServieAdmin(root, comp, service);
 
-# creating a new user
-sa.addUser "jid@example.org", "secret", { name: "Der Weihnachtsmann" }, (err) ->
+// creating a new user
+sa.addUser("jid@example.org", "secret", { name: "Der Weihnachtsmann" }, function(err){ /*...*/ });
 
-# changing a user password
-sa.changeUserPassword "jid@example.org", "newSecret", (err) ->
+// changing a user password
+sa.changeUserPassword("jid@example.org", "newSecret", function(err){ /*...*/ });
 
-# delete a user
-sa.deleteUser "jid@example.org", (err) ->
+// delete a user
+sa.deleteUser("jid@example.org", function(err){ /*...*/ });
 ```
 
 ## Running tests
 
 ```shell
-jasmine-node --coffee spec/
+npm install
+npm test
 ```
 
 ## License
