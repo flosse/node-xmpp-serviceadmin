@@ -12,28 +12,26 @@
   "engine":       "node",
   "dependencies":
   {
-    "node-xmpp":      "~0.5.4",
-    "ltx":            "~0.2.4"
+    "node-xmpp":      "~0.7.1",
+    "ltx":            "~0.3.0"
   },
   "devDependencies":
   {
     "jasmine-node":   "~1.10.2",
     "coffee-script":  "~1.6.3"
   },
-  "repositories":
-  [
-    {
-      "type": "git",
-		  "path": "git://github.com/flosse/node-xmpp-serviceadmin.git"
-		}
-  ],
+  "repository":
+  {
+    "type": "git",
+    "url": "git://github.com/flosse/node-xmpp-serviceadmin.git"
+  },
   "maintainers":
   [
     {
       "name":   "Markus Kohlhase",
-		  "email":  "mail@markus-kohlhase.de",
-		  "web":    "http://github.com/flosse/"
-	  }
+      "email":  "mail@markus-kohlhase.de",
+      "web":    "http://github.com/flosse/"
+    }
   ],
   "scripts":
   {
