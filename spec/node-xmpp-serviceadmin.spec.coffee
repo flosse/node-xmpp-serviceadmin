@@ -1,9 +1,9 @@
-chai        = require 'chai'
-should      = chai.should()
+chai          = require 'chai'
+should        = chai.should()
+xmpp          = require "node-xmpp-core"
+ServiceAdmin  = require "../src/ServiceAdmin"
 
-ServiceAdmin = require "../lib/ServiceAdmin"
-
-describe "Service Admin", ->
+describe "The Service Admin", ->
 
   service = "comp.exmaple.tld"
 
@@ -15,18 +15,108 @@ describe "Service Admin", ->
     channels: {}
     send: (data) -> xmppClient.onData data
     onData: (data) ->
-    on: (channel, cb) ->
-      @channels[channel] = cb
+    on: (channel, cb) -> @channels[channel] = cb
     jid: service
 
-  it "creates a new ServiceAdmin object", ->
+  beforeEach -> @admin = new ServiceAdmin "admin@xy.tld", xmppComp, service
 
-    # define the JID that has the admin privileges
-    root = "root@#{service}"
-    serviceAdmin = new ServiceAdmin root, xmppComp, service
-    serviceAdmin                    .should.be.an.  object
-    serviceAdmin.jid                .should.equal   root
-    serviceAdmin.service            .should.equal   service
-    serviceAdmin.addUser            .should.be.a.   function
-    serviceAdmin.deleteUser         .should.be.a.   function
-    serviceAdmin.changeUserPassword .should.be.a.   function
+  describe "constructor", ->
+
+    it "creates a new ServiceAdmin object", ->
+
+      # define the JID that has the admin privileges
+      root = "root@#{service}"
+      serviceAdmin = new ServiceAdmin root, xmppComp, service
+      serviceAdmin                    .should.be.an.  object
+      serviceAdmin.jid                .should.equal   root
+      serviceAdmin.service            .should.equal   service
+      serviceAdmin.addUser            .should.be.a.   function
+      serviceAdmin.deleteUser         .should.be.a.   function
+      serviceAdmin.changeUserPassword .should.be.a.   function
+
+  describe "'addUser' method", ->
+
+    it "takes a JID, a password, optinal properties \
+        and a callback as parameters", (done) ->
+
+      @admin.runOneStageCmd = (cmd, data, next) =>
+
+        cmd.should.equal "add-user"
+        data.accountjid           .should.equal "foo@bar"
+        data.password             .should.equal "baz"
+        data['password-verify']   .should.equal "baz"
+
+        should.not.exist data.email
+        should.not.exist data.given_name
+        should.not.exist data.surname
+
+        @admin.runOneStageCmd = (cmd, data, next) =>
+
+          cmd                     .should.equal "add-user"
+          data.accountjid         .should.equal "x@y"
+          data.password           .should.equal "z"
+          data['password-verify'] .should.equal "z"
+          data.email              .should.equal "foo@bar.baz"
+          data.given_name         .should.equal "no"
+          data.surname            .should.equal "name"
+          done()
+
+        @admin.addUser "x@y", "z",
+          email:    "foo@bar.baz"
+          name:     "no"
+          surname:  "name"
+
+      @admin.addUser "foo@bar/res", "baz", ->
+
+  describe "'deleteUser' method", ->
+
+    it "takes one or multiple JIDs and a callback as parameters", (done) ->
+
+      @admin.runOneStageCmd = (cmd, data, next) =>
+        cmd.should.equal "delete-user"
+        data.accountjids.should.eql "foo@bar"
+
+        @admin.runOneStageCmd = (cmd, data, next) =>
+          cmd.should.equal "delete-user"
+          data.accountjids.should.eql ["x@y", "z@a"]
+          done()
+
+        @admin.deleteUser ["x@y/a", "z@a/b"], ->
+
+      @admin.deleteUser "foo@bar/x", ->
+
+  describe "'changeUserPassword' method", ->
+
+    it "takes the JID, the new password and a callback as parameters", (done) ->
+
+      @admin.runOneStageCmd = (cmd, data, next) =>
+        cmd.should.equal "change-user-password"
+        data.accountjid.should.eql "b@r"
+        data.password.should.eql "new"
+        done()
+
+      @admin.changeUserPassword "b@r/t", "new", ->
+
+  describe "'fillForm' helper method", ->
+
+    it "takes the request stanza and converts is to a response stanza", ->
+      s = new xmpp.Stanza.Iq {type: 'result'}
+      s.c("command", status: "executing").c("x")
+        .c("field", var: "foo").up()
+        .c("field", var: "bar").c("required").up().up()
+        .c("field", var: "baz").up()
+
+      fields =
+        foo: "a"
+        bar: ["b"]
+        baz: ["c", "d"]
+
+      ServiceAdmin.fillForm s, fields
+      s.attrs.type.should.equal "set"
+      should.not.exist (c = s.getChild "command").attrs.status
+      (x = c.getChild "x").attrs.type.should.equal "submit"
+      (f = x.getChildren "field").length.should.equal 3
+      f[0].getChild("value").children[0].should.equal "a"
+      f[1].getChild("value").children[0].should.equal "b"
+      f[2].getChildren("value")[0].children[0].should.equal "c"
+      f[2].getChildren("value")[1].children[0].should.equal "d"

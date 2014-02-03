@@ -7,8 +7,8 @@ xmpp = require "node-xmpp-core"
 
 NS        = "http://jabber.org/protocol/admin"
 CMD_NS    = "http://jabber.org/protocol/commands"
-A_JID     = "accountjid"
-A_JIDS    = "accountjids"
+JID       = "accountjid"
+JIDS      = "accountjids"
 EMAIL     = "email"
 NAME      = "given_name"
 SURNAME   = "surname"
@@ -31,9 +31,9 @@ class ServiceAdmin
         if stanza.attrs.type is 'error'
           comp.removeListener "stanza", handler
           next? new Error "could not execute command"
-          
+
         else if stanza.attrs.type is 'result'
-              
+
           switch stanza.getChild("command").attrs.status
 
             when "executing"
@@ -62,23 +62,32 @@ class ServiceAdmin
      stanza.attrs.to = stanza.attrs.from
      stanza.attrs.from = me
 
-  @fillForm: (stanza,fields) ->
+  @fillForm: (stanza, fields) ->
     stanza.attrs.type = "set"
     c = stanza.getChild "command"
     delete c.attrs.status
     x = c.getChild "x"
-    req = c.getChildren "required"
     x.attrs.type = "submit"
     for xF in x.getChildren "field"
       if (val = fields[xF.attrs.var])?
-        xF.children = []
-        xF.c("value").t val
+        if val instanceof Array
+          xF.c("value").t(v).up() for v in val
+        else
+          xF.c("value").t val.toString()
+
+  @getJID: (jid) ->
+    if jid instanceof Array
+      (ServiceAdmin.getJID x for x in jid)
+    else if jid instanceof xmpp.JID
+      jid
+    else
+      jid = new xmpp.JID(jid).bare().toString()
 
   addUser: (jid, pw, prop={}, next) ->
     data = {}
-    data[A_JID]     = [jid]
-    data[PASS]      = [pw]
-    data[PASS_VERY] = [pw]
+    data[JID]       = ServiceAdmin.getJID jid
+    data[PASS]      = pw
+    data[PASS_VERY] = pw
     data[EMAIL]     = prop.email   if prop.email
     data[NAME]      = prop.name    if prop.name
     data[SURNAME]   = prop.surname if prop.surname
@@ -86,16 +95,13 @@ class ServiceAdmin
 
   deleteUser: (jid, next) ->
     data = {}
-    if typeof jid is "string"
-      data[A_JIDS] = [jid]
-    else if jid instanceof Array
-      data[A_JIDS] = jid
+    data[JIDS] = ServiceAdmin.getJID jid
     @runOneStageCmd "delete-user", data, next
 
   changeUserPassword: (jid, pw, next) ->
     data = {}
-    data[A_JID] = jid
-    data[PASS] = pw
+    data[JID]   = ServiceAdmin.getJID jid
+    data[PASS]  = pw
     @runOneStageCmd "change-user-password", data, next
 
 module.exports = ServiceAdmin

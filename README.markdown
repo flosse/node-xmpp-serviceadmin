@@ -44,6 +44,9 @@ sa.changeUserPassword("jid@example.org", "newSecret", function(err){ /*...*/ });
 
 // delete a user
 sa.deleteUser("jid@example.org", function(err){ /*...*/ });
+
+// delete multiple users at once
+sa.deleteUser(["jid@example.org","jid2@example.org"], function(err){ /*...*/ });
 ```
 
 ## Running tests
