@@ -1,10 +1,9 @@
 ###
 This program is distributed under the terms of the MIT license.
-Copyright 2012 (c) Markus Kohlhase <mail@markus-kohlhase.de>
+Copyright 2012 - 2014 (c) Markus Kohlhase <mail@markus-kohlhase.de>
 ###
 
-xmpp = require "node-xmpp"
-ltx  = require "ltx"
+xmpp = require "node-xmpp-core"
 
 NS        = "http://jabber.org/protocol/admin"
 CMD_NS    = "http://jabber.org/protocol/commands"
@@ -50,8 +49,8 @@ class ServiceAdmin
     cmdIq = ServiceAdmin.createCmdIq @jid, @service, id, cmd
     @comp.send cmdIq
                       
-  @createCmdIq: (jid, service, id, cmd) ->
-    iq = new xmpp.Iq({ type:'set', from:jid, to:service, id:id })
+  @createCmdIq: (from, to, id, cmd) ->
+    iq = new xmpp.Stanza.Iq { type:'set', from, to, id }
     iq.c "command",
       xmlns: CMD_NS
       node: "#{NS}##{cmd}"

@@ -12,13 +12,12 @@
   "engine":       "node",
   "dependencies":
   {
-    "node-xmpp":      "~0.7.1",
-    "ltx":            "~0.3.0"
+    "node-xmpp-core": "~0.4.7"
   },
   "devDependencies":
   {
-    "jasmine-node":   "~1.10.2",
-    "coffee-script":  "~1.6.3"
+    "jasmine-node":   "~1.13.1",
+    "coffee-script":  "~1.7.1"
   },
   "repository":
   {

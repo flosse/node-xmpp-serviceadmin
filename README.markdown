@@ -26,7 +26,7 @@ var service = "example.org";
 // define the JID that has the admin privileges
 var root = "root@mycomponent.example.org";
 
-// creat the xmpp connection
+// create the xmpp connection
 var comp = new xmpp.Component({
   jid       : "mycomponent",
   password  : "secret",

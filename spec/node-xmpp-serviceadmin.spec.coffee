@@ -1,5 +1,4 @@
 ServiceAdmin = require "../lib/ServiceAdmin"
-ltx          = require "ltx"
 
 describe "Service Admin", ->
 
