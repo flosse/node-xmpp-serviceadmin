@@ -1,40 +1,46 @@
 {
-  "name":         "node-xmpp-serviceadmin",
-  "version":      "0.1.3",
-  "main":         "./lib/ServiceAdmin",
-  "description":  "Service Administration (XEP-0133) library for node-xmpp",
-  "author":       "Markus Kohlhase",
-  "keywords":     ["xmpp","node","xep"],
-  "homepage":     "http://github.com/flosse/node-xmpp-serviceadmin",
-  "bugs":         "http://github.com/flosse/node-xmpp-serviceadmin/issues",
-  "contributors": ["Markus Kohlhase"],
-  "licenses":     [{"type": "MIT"}],
-  "engine":       "node",
-  "dependencies":
-  {
+  "name": "node-xmpp-serviceadmin",
+  "version": "0.1.3",
+  "main": "./lib/ServiceAdmin",
+  "description": "Service Administration (XEP-0133) library for node-xmpp",
+  "author": "Markus Kohlhase",
+  "keywords": [
+    "xmpp",
+    "node",
+    "xep"
+  ],
+  "homepage": "http://github.com/flosse/node-xmpp-serviceadmin",
+  "bugs": "http://github.com/flosse/node-xmpp-serviceadmin/issues",
+  "contributors": [
+    "Markus Kohlhase"
+  ],
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ],
+  "engine": "node",
+  "dependencies": {
     "node-xmpp-core": "~0.4.7"
   },
-  "devDependencies":
-  {
-    "jasmine-node":   "~1.13.1",
-    "coffee-script":  "~1.7.1"
+  "devDependencies": {
+    "chai": "~1.9.0",
+    "coffee-script": "~1.7.1",
+    "mocha": "~1.17.1"
   },
-  "repository":
-  {
+  "repository": {
     "type": "git",
     "url": "git://github.com/flosse/node-xmpp-serviceadmin.git"
   },
-  "maintainers":
-  [
+  "maintainers": [
     {
-      "name":   "Markus Kohlhase",
-      "email":  "mail@markus-kohlhase.de",
-      "web":    "http://github.com/flosse/"
+      "name": "Markus Kohlhase",
+      "email": "mail@markus-kohlhase.de",
+      "web": "http://github.com/flosse/"
     }
   ],
-  "scripts":
-  {
+  "scripts": {
     "prepublish": "coffee -bc -o lib/ src/*.coffee",
-    "test": "coffee -bc -o lib src/*.coffee && jasmine-node --forceexit --coffee spec/"
+    "test": "./node_modules/.bin/mocha --reporter spec --compilers coffee:coffee-script/register spec/*.spec.coffee"
   }
 }

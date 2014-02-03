@@ -1,8 +1,11 @@
+chai        = require 'chai'
+should      = chai.should()
+
 ServiceAdmin = require "../lib/ServiceAdmin"
 
 describe "Service Admin", ->
 
-  service   = "comp.exmaple.tld"
+  service = "comp.exmaple.tld"
 
   xmppClient =
     send: (data) -> xmppComp.channels.stanza data
@@ -21,9 +24,9 @@ describe "Service Admin", ->
     # define the JID that has the admin privileges
     root = "root@#{service}"
     serviceAdmin = new ServiceAdmin root, xmppComp, service
-    (expect typeof serviceAdmin).toEqual "object"
-    (expect serviceAdmin.jid).toEqual root
-    (expect serviceAdmin.service).toEqual service
-    (expect typeof serviceAdmin.addUser).toEqual "function"
-    (expect typeof serviceAdmin.deleteUser).toEqual "function"
-    (expect typeof serviceAdmin.changeUserPassword).toEqual "function"
+    serviceAdmin                    .should.be.an.  object
+    serviceAdmin.jid                .should.equal   root
+    serviceAdmin.service            .should.equal   service
+    serviceAdmin.addUser            .should.be.a.   function
+    serviceAdmin.deleteUser         .should.be.a.   function
+    serviceAdmin.changeUserPassword .should.be.a.   function
