@@ -21,7 +21,7 @@
   ],
   "engine": "node",
   "dependencies": {
-    "node-xmpp-core": "~0.4.7"
+    "node-xmpp-core": "~0.4.9"
   },
   "devDependencies": {
     "chai": "~1.9.0",

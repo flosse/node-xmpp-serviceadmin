@@ -16,7 +16,8 @@ describe "The Service Admin", ->
     send: (data) -> xmppClient.onData data
     onData: (data) ->
     on: (channel, cb) -> @channels[channel] = cb
-    jid: service
+    connection: { jid: service }
+    removeListener: ->
 
   beforeEach -> @admin = new ServiceAdmin "admin@xy.tld", xmppComp, service
 
@@ -120,3 +121,17 @@ describe "The Service Admin", ->
       f[1].getChild("value").children[0].should.equal "b"
       f[2].getChildren("value")[0].children[0].should.equal "c"
       f[2].getChildren("value")[1].children[0].should.equal "d"
+
+  describe "'runOneStageCmd' helper method", ->
+
+    it "catches errors", (done) ->
+
+      xmppClient.onData = (x) ->
+        s = new xmpp.Stanza.Iq {type: 'result', id: x.attrs.id}
+        s.c("command", status: "completed")
+          .c("note",{type: 'error'}).t("foo bar baz")
+        xmppClient.send s
+
+      @admin.runOneStageCmd "foo", {}, (err) ->
+        err.message.should.equal "foo bar baz"
+        done()

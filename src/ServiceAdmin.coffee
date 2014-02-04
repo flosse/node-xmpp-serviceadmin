@@ -25,8 +25,7 @@ class ServiceAdmin
     comp = @comp
 
     handler = (stanza) ->
-
-      if stanza.is('iq') and stanza.attrs.id is id
+      if stanza.is('iq') and stanza.attrs?.id is id
 
         if stanza.attrs.type is 'error'
           comp.removeListener "stanza", handler
@@ -34,7 +33,7 @@ class ServiceAdmin
 
         else if stanza.attrs.type is 'result'
 
-          switch stanza.getChild("command").attrs.status
+          switch (c = stanza.getChild "command").attrs?.status
 
             when "executing"
               ServiceAdmin.switchAddr stanza
@@ -43,12 +42,14 @@ class ServiceAdmin
 
             when 'completed'
               comp.removeListener "stanza", handler
-              next?()
+              if (n = c.getChild "note").attrs?.type is "error"
+                next new Error n.children?[0]
+              else next?()
 
     @comp.on 'stanza', handler
     cmdIq = ServiceAdmin.createCmdIq @jid, @service, id, cmd
     @comp.send cmdIq
-                      
+
   @createCmdIq: (from, to, id, cmd) ->
     iq = new xmpp.Stanza.Iq { type:'set', from, to, id }
     iq.c "command",

@@ -16,6 +16,10 @@ With package manager [npm](http://npmjs.org/):
 
 ## Usage
 
+First of all make sure your server is configured correctly
+(see "Configuring your server").
+Then you can require and use the module like that:
+
 ```javascript
 var xmpp          = require("node-xmpp");
 var ServiceAdmin  = require("node-xmpp-serviceadmin");
@@ -34,19 +38,76 @@ var comp = new xmpp.Component({
   port      : "8888"
 });
 
-var sa = new ServieAdmin(root, comp, service);
+var sa = new ServiceAdmin(root, comp, service);
 
-// creating a new user
-sa.addUser("jid@example.org", "secret", { name: "Der Weihnachtsmann" }, function(err){ /*...*/ });
+// wait until the component is online
+comp.on("online", function(){
 
-// changing a user password
-sa.changeUserPassword("jid@example.org", "newSecret", function(err){ /*...*/ });
+  // creating a new user
+  sa.addUser(
+    "jid@example.org",
+    "secret",
+    { name: "Der Weihnachtsmann" },
+    function(err){ /*...*/ }
+  );
 
-// delete a user
-sa.deleteUser("jid@example.org", function(err){ /*...*/ });
+  // changing a user password
+  sa.changeUserPassword(
+    "jid@example.org",
+    "newSecret",
+    function(err){ /*...*/ }
+  );
 
-// delete multiple users at once
-sa.deleteUser(["jid@example.org","jid2@example.org"], function(err){ /*...*/ });
+  // delete a user
+  sa.deleteUser(
+    "jid@example.org",
+    function(err){ /*...*/ }
+  );
+
+  // delete multiple users at once
+  sa.deleteUser(
+    ["jid@example.org","jid2@example.org"],
+    function(err){ /*...*/ }
+  );
+
+});
+```
+## Configuring your server
+
+Make sure that:
+
+1. The server supports [XEP-0133](http://xmpp.org/extensions/xep-0133.html)
+2. The JID of your component has admin privileges
+3. XEP-0133 is enabled
+
+### Prosody
+
+```lua
+admins = { "root@example.org", "admin@component.example.org" }
+
+modules_enabled = {
+  --
+  "admin_adhoc";
+  --
+};
+```
+
+### ejabberd
+
+#### v2.13 and older
+
+```txt
+{acl, admin, {user, "root", "example.org"}}.
+{acl, admin, {user, "admin", "component.example.org"}}.
+```
+#### v13.10 and newer
+
+```yml
+acl:
+  admin:
+    user:
+      - "root":  "example.org"
+      - "admin": "component.example.org"
 ```
 
 ## Running tests
