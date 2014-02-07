@@ -98,6 +98,35 @@ describe "The Service Admin", ->
 
       @admin.changeUserPassword "b@r/t", "new", ->
 
+  describe "'getUserPassword' method", ->
+
+    it "takes the JID and a callback as parameters", (done) ->
+
+      xmppClient.onData = (x) ->
+
+        s = new xmpp.Stanza.Iq {type: 'result', id: x.attrs.id}
+        s.c("command", status: "completed")
+          .c("x",{type: 'result'})
+            .c("field", type: "hidden", var:"FORM_TYPE")
+              .c("value")
+                .t("http://jabber.org/protocol/admin")
+              .up()
+            .up()
+            .c("field", var:"accountjid")
+              .c("value")
+                .t("b@r/t")
+              .up()
+            .c("field", var:"password")
+              .c("value")
+                .t("topSecret")
+              .up()
+        xmppClient.send s
+
+      @admin.getUserPassword "b@r/t", (err, pw) ->
+        should.not.exist err
+        pw.toString().should.equal "topSecret"
+        done()
+
   describe "'fillForm' helper method", ->
 
     it "takes the request stanza and converts is to a response stanza", ->

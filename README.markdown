@@ -58,6 +58,12 @@ comp.on("online", function(){
     function(err){ /*...*/ }
   );
 
+  // receive a user's password
+  sa.getUserPassword(
+    "jid@example.org",
+    function(err){ /*...*/ }
+  );
+
   // delete a user
   sa.deleteUser(
     "jid@example.org",

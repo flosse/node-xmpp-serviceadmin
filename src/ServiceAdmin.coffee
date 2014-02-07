@@ -19,7 +19,7 @@ class ServiceAdmin
 
   constructor: (@jid, @comp, @service) ->
 
-  runOneStageCmd: (cmd, fields, next) ->
+  runOneStageCmd: (cmd, fields, next=->) ->
 
     id = "exec#{(new Date).getTime()}"
     comp = @comp
@@ -29,7 +29,7 @@ class ServiceAdmin
 
         if stanza.attrs.type is 'error'
           comp.removeListener "stanza", handler
-          next? new Error "could not execute command"
+          next new Error "could not execute command"
 
         else if stanza.attrs.type is 'result'
 
@@ -42,9 +42,9 @@ class ServiceAdmin
 
             when 'completed'
               comp.removeListener "stanza", handler
-              if (n = c.getChild "note").attrs?.type is "error"
+              if (n = c.getChild "note")?.attrs?.type is "error"
                 next new Error n.children?[0]
-              else next?()
+              else next undefined, c
 
     @comp.on 'stanza', handler
     cmdIq = ServiceAdmin.createCmdIq @jid, @service, id, cmd
@@ -104,5 +104,14 @@ class ServiceAdmin
     data[JID]   = ServiceAdmin.getJID jid
     data[PASS]  = pw
     @runOneStageCmd "change-user-password", data, next
+
+  getUserPassword: (jid, next) ->
+    data = {}
+    data[JID]   = ServiceAdmin.getJID jid
+    @runOneStageCmd "get-user-password", data, (err, c) ->
+      return next err if err
+      next undefined, c.getChildByAttr("var", "password", null, true)?.
+        getChild("value")?.
+        getText()
 
 module.exports = ServiceAdmin
