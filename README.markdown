@@ -116,6 +116,43 @@ acl:
       - "admin": "component.example.org"
 ```
 
+## Implemented methods
+
+- 4.1. Add User
+- 4.2. Delete User
+- 4.5. End User Session
+- 4.6. Get User Password
+- 4.7. Change User Password
+
+## Missing methods
+
+- 4.3. Disable User
+- 4.4. Re-Enable User
+- 4.8. Get User Roster
+- 4.9. Get User Last Login Time
+- 4.10. Get User Statistics
+- 4.11. Edit Blacklist
+- 4.12. Edit Whitelist
+- 4.13. Get Number of Registered Users
+- 4.14. Get Number of Disabled Users
+- 4.15. Get Number of Online Users
+- 4.16. Get Number of Active Users
+- 4.17. Get Number of Idle Users
+- 4.18. Get List of Registered Users
+- 4.19. Get List of Disabled Users
+- 4.20. Get List of Online Users
+- 4.21. Get List of Active Users
+- 4.22. Get List of Idle Users
+- 4.23. Send Announcement to Online Users
+- 4.24. Set Message of the Day
+- 4.25. Edit Message of the Day
+- 4.26. Delete Message of the Day
+- 4.27. Set Welcome Message
+- 4.28. Delete Welcome Message
+- 4.29. Edit Admin List
+- 4.30. Restart Service
+- 4.31. Shut Down Service
+
 ## Running tests
 
 ```shell

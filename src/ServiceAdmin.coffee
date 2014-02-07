@@ -99,6 +99,11 @@ class ServiceAdmin
     data[JIDS] = ServiceAdmin.getJID jid
     @runOneStageCmd "delete-user", data, next
 
+  disableUser: (jid, next) ->
+    data = {}
+    data[JIDS] = ServiceAdmin.getJID jid
+    @runOneStageCmd "disable-user", data, next
+
   changeUserPassword: (jid, pw, next) ->
     data = {}
     data[JID]   = ServiceAdmin.getJID jid
@@ -113,5 +118,10 @@ class ServiceAdmin
       next undefined, c.getChildByAttr("var", "password", null, true)?.
         getChild("value")?.
         getText()
+
+  endUserSession: (jids, next) ->
+    data = {}
+    data[JIDS] = ServiceAdmin.getJID jids
+    @runOneStageCmd "end-user-session", data, next
 
 module.exports = ServiceAdmin

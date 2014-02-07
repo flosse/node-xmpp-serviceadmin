@@ -127,6 +127,36 @@ describe "The Service Admin", ->
         pw.toString().should.equal "topSecret"
         done()
 
+  describe "'endUserSession' method", ->
+
+    it "takes an array of JIDs and a callback as parameters", (done) ->
+
+      xmppClient.onData = (x) ->
+
+        s = new xmpp.Stanza.Iq {type: 'result', id: x.attrs.id}
+        s.c("command", status: "completed")
+        xmppClient.send s
+
+      @admin.endUserSession ["b@r/t", "foo@bar.baz"], (err, res) ->
+        should.not.exist err
+        res.children.length.should.equal 0
+        done()
+
+  describe "'disableUser' method", ->
+
+    it "takes an array of JIDs and a callback as parameters", (done) ->
+
+      xmppClient.onData = (x) ->
+
+        s = new xmpp.Stanza.Iq {type: 'result', id: x.attrs.id}
+        s.c("command", status: "completed")
+        xmppClient.send s
+
+      @admin.disableUser ["b@r/t", "foo@bar.baz"], (err, res) ->
+        should.not.exist err
+        res.children.length.should.equal 0
+        done()
+
   describe "'fillForm' helper method", ->
 
     it "takes the request stanza and converts is to a response stanza", ->
