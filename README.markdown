@@ -102,7 +102,7 @@ modules_enabled = {
 
 #### v2.13 and older
 
-```txt
+```erlang
 {acl, admin, {user, "root", "example.org"}}.
 {acl, admin, {user, "admin", "component.example.org"}}.
 ```
