@@ -71,7 +71,7 @@ class ServiceAdmin
     x.attrs.type = "submit"
     for xF in x.getChildren "field"
       if (val = fields[xF.attrs.var])?
-        xF.remove("value") if xF.getChild("value") != null
+        xF.remove("value") if xF.getChild("value")?
         if val instanceof Array
           xF.c("value").t(v).up() for v in val
         else

@@ -12,7 +12,7 @@ Jabber Service Administration
 
 With package manager [npm](http://npmjs.org/):
 
-    npm install node-xmpp-serviceadmin
+    npm install --save node-xmpp-serviceadmin
 
 ## Usage
 

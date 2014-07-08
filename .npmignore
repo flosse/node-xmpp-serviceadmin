@@ -1,3 +1,5 @@
 lib/*.coffee
 spec/*.coffee
 node_modules
+examples/
+*.swp

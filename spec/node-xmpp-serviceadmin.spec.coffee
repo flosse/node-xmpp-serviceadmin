@@ -181,6 +181,17 @@ describe "The Service Admin", ->
       f[2].getChildren("value")[0].children[0].should.equal "c"
       f[2].getChildren("value")[1].children[0].should.equal "d"
 
+    it "removes existing values", ->
+      s = new xmpp.Stanza.Iq {type: 'result'}
+      s.c("command", status: "executing").c("x")
+        .c("field", var: "foo")
+          .c("value").t("an existing value").up()
+          .c("value").t("an other existing value")
+
+      ServiceAdmin.fillForm s, foo: "a"
+      f = s.getChild("command").getChild("x").getChildren "field"
+      f[0].getChild("value").children[0].should.equal "a"
+
   describe "'runOneStageCmd' helper method", ->
 
     it "catches errors", (done) ->
