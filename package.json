@@ -1,6 +1,6 @@
 {
   "name": "node-xmpp-serviceadmin",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "main": "./lib/ServiceAdmin",
   "description": "Service Administration (XEP-0133) library for node-xmpp",
   "author": "Markus Kohlhase",
@@ -17,12 +17,17 @@
   "license": "MIT",
   "engine": "node",
   "dependencies": {
-    "node-xmpp-core": "~0.5.0"
+    "node-xmpp-core": "~1.0.0-alpha14",
+    "node-stringprep": "~0.7.0",
+    "ltx": "~0.9.0",
+    "node-expat": "~2.3.7",
+    "coffee-script": "^1.9.2"
   },
   "devDependencies": {
-    "chai": "^2.0.0",
-    "coffee-script": "^1.9.1",
-    "mocha": "^2.1.0"
+    "chai": "^2.2.0",
+    "coffee-script": "^1.9.2",
+    "coffeelint": "^1.9.3",
+    "mocha": "^2.2.4"
   },
   "repository": {
     "type": "git",
@@ -36,7 +41,8 @@
     }
   ],
   "scripts": {
+    "lint": "coffeelint src/",
     "prepublish": "./node_modules/.bin/coffee -bc -o lib/ src/*.coffee",
-    "test": "./node_modules/.bin/mocha --reporter spec --compilers coffee:coffee-script/register spec/*.spec.coffee"
+    "test": "npm run lint && ./node_modules/.bin/mocha --reporter spec --compilers coffee:coffee-script/register spec/*.spec.coffee"
   }
 }

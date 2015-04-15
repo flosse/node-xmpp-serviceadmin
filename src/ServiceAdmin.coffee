@@ -1,6 +1,6 @@
 ###
 This program is distributed under the terms of the MIT license.
-Copyright 2012 - 2014 (c) Markus Kohlhase <mail@markus-kohlhase.de>
+Copyright 2012 - 2015 (c) Markus Kohlhase <mail@markus-kohlhase.de>
 ###
 
 xmpp = require "node-xmpp-core"
@@ -59,9 +59,9 @@ class ServiceAdmin
     iq
 
   @switchAddr: (stanza) ->
-     me = stanza.attrs.to
-     stanza.attrs.to = stanza.attrs.from
-     stanza.attrs.from = me
+    me = stanza.attrs.to
+    stanza.attrs.to = stanza.attrs.from
+    stanza.attrs.from = me
 
   @fillForm: (stanza, fields) ->
     stanza.attrs.type = "set"
