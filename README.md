@@ -4,9 +4,9 @@ Jabber Service Administration
 [XEP-0133](http://xmpp.org/extensions/xep-0133.html) library for
 [node-xmpp](https://github.com/astro/node-xmpp).
 
-[![Build Status](https://secure.travis-ci.org/flosse/node-xmpp-serviceadmin.png)](http://travis-ci.org/flosse/node-xmpp-serviceadmin)
-[![Dependency Status](https://gemnasium.com/flosse/node-xmpp-serviceadmin.png)](https://gemnasium.com/flosse/node-xmpp-serviceadmin.png)
-[![NPM version](https://badge.fury.io/js/node-xmpp-serviceadmin.png)](http://badge.fury.io/js/node-xmpp-serviceadmin)
+[![Build Status](https://secure.travis-ci.org/flosse/node-xmpp-serviceadmin.svg)](http://travis-ci.org/flosse/node-xmpp-serviceadmin)
+[![Dependency Status](https://gemnasium.com/flosse/node-xmpp-serviceadmin.svg)](https://gemnasium.com/flosse/node-xmpp-serviceadmin.png)
+[![NPM version](https://badge.fury.io/js/node-xmpp-serviceadmin.svg)](http://badge.fury.io/js/node-xmpp-serviceadmin)
 
 ## Installation
 

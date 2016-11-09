@@ -1,6 +1,6 @@
 ###
 This program is distributed under the terms of the MIT license.
-Copyright 2012 - 2015 (c) Markus Kohlhase <mail@markus-kohlhase.de>
+Copyright 2012 - 2016 (c) Markus Kohlhase <mail@markus-kohlhase.de>
 ###
 
 xmpp = require "node-xmpp-core"
@@ -51,7 +51,7 @@ class ServiceAdmin
     @comp.send cmdIq
 
   @createCmdIq: (from, to, id, cmd) ->
-    iq = new xmpp.Stanza.Iq { type:'set', from, to, id }
+    iq = new xmpp.stanza.IQ { type:'set', from, to, id }
     iq.c "command",
       xmlns: CMD_NS
       node: "#{NS}##{cmd}"

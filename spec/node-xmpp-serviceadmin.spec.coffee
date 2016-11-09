@@ -104,7 +104,7 @@ describe "The Service Admin", ->
 
       xmppClient.onData = (x) ->
 
-        s = new xmpp.Stanza.Iq {type: 'result', id: x.attrs.id}
+        s = new xmpp.stanza.IQ {type: 'result', id: x.attrs.id}
         s.c("command", status: "completed")
           .c("x",{type: 'result'})
             .c("field", type: "hidden", var:"FORM_TYPE")
@@ -133,7 +133,7 @@ describe "The Service Admin", ->
 
       xmppClient.onData = (x) ->
 
-        s = new xmpp.Stanza.Iq {type: 'result', id: x.attrs.id}
+        s = new xmpp.stanza.IQ {type: 'result', id: x.attrs.id}
         s.c("command", status: "completed")
         xmppClient.send s
 
@@ -148,7 +148,7 @@ describe "The Service Admin", ->
 
       xmppClient.onData = (x) ->
 
-        s = new xmpp.Stanza.Iq {type: 'result', id: x.attrs.id}
+        s = new xmpp.stanza.IQ {type: 'result', id: x.attrs.id}
         s.c("command", status: "completed")
         xmppClient.send s
 
@@ -160,7 +160,7 @@ describe "The Service Admin", ->
   describe "'fillForm' helper method", ->
 
     it "takes the request stanza and converts is to a response stanza", ->
-      s = new xmpp.Stanza.Iq {type: 'result'}
+      s = new xmpp.stanza.IQ {type: 'result'}
       s.c("command", status: "executing").c("x")
         .c("field", var: "foo").up()
         .c("field", var: "bar").c("required").up().up()
@@ -182,7 +182,7 @@ describe "The Service Admin", ->
       f[2].getChildren("value")[1].children[0].should.equal "d"
 
     it "removes existing values", ->
-      s = new xmpp.Stanza.Iq {type: 'result'}
+      s = new xmpp.stanza.IQ {type: 'result'}
       s.c("command", status: "executing").c("x")
         .c("field", var: "foo")
           .c("value").t("an existing value").up()
@@ -197,7 +197,7 @@ describe "The Service Admin", ->
     it "catches errors", (done) ->
 
       xmppClient.onData = (x) ->
-        s = new xmpp.Stanza.Iq {type: 'result', id: x.attrs.id}
+        s = new xmpp.stanza.IQ {type: 'result', id: x.attrs.id}
         s.c("command", status: "completed")
           .c("note",{type: 'error'}).t("foo bar baz")
         xmppClient.send s
